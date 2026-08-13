@@ -1,13 +1,748 @@
+:root {
+    --background: #f7f8fa;
+    --surface: #ffffff;
+
+    --text: #111318;
+    --text-secondary: #686d76;
+
+    --border: #e7e9ed;
+
+    --primary: #1769e0;
+    --primary-hover: #115bc7;
+
+    --success: #22a06b;
+
+    --header-height: 76px;
+
+    --container: 1180px;
+}
+
 * {
-    box-sizing:border-box;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    line-height: 1.6;
+    min-height: 100vh;
+
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    color: var(--text);
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+.container {
+    width: min(calc(100% - 48px), var(--container));
+    margin-inline: auto;
+}
+
+
+/* HEADER */
+
+.header {
+    height: var(--header-height);
+
+    background: rgba(247, 248, 250, 0.9);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.045);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    backdrop-filter: blur(16px);
+}
+
+.navbar {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+.logo-mark {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    color: #fff;
+    background: var(--text);
+
+    border-radius: 9px;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+
+    color: #5d626c;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-links a {
+    position: relative;
+
+    transition:
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--text);
+}
+
+.nav-links a:hover {
+    transform: translateY(-1px);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.login-link {
+    color: #464b54;
+
+    transition: color 160ms ease;
+}
+
+.login-link:hover {
+    color: var(--text);
+}
+
+
+/* BUTTON */
+
+.button {
+    min-height: 48px;
+
+    padding: 0 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    border-radius: 10px;
+
+    color: #fff;
+    background: var(--text);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        transform 180ms ease,
+        background 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+
+    background: #25282e;
+
+    box-shadow: 0 10px 24px rgba(17, 19, 24, 0.14);
+}
+
+.button-small {
+    min-height: 40px;
+    padding-inline: 16px;
+
+    border-radius: 8px;
+}
+
+.button-secondary {
+    min-height: 48px;
+
+    padding: 0 18px;
+
+    display: inline-flex;
+    align-items: center;
+
+    color: #4f545d;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 10px;
+
+    transition:
+        background 160ms ease,
+        color 160ms ease;
+}
+
+.button-secondary:hover {
+    color: var(--text);
+    background: #eceef1;
+}
+
+
+/* HERO */
+
+.hero {
+    min-height: calc(100vh - var(--header-height));
+
+    display: flex;
+    align-items: center;
+
+    padding: 80px 0 100px;
+
+    overflow: hidden;
+}
+
+.hero-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 0.9fr);
+
+    align-items: center;
+
+    gap: 90px;
+}
+
+.hero-content {
+    max-width: 620px;
+}
+
+.hero-badge {
+    width: fit-content;
+
+    margin-bottom: 24px;
+    padding: 8px 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #5b6068;
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: 100px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.025);
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 100%;
+
+    background: var(--success);
+
+    box-shadow: 0 0 0 4px rgba(34, 160, 107, 0.1);
+}
+
+.hero h1 {
+    max-width: 600px;
+
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: 1.03;
+
+    letter-spacing: -4px;
+
+    font-weight: 700;
+}
+
+.hero h1 span {
+    display: block;
+
+    color: #9a9da3;
+}
+
+.hero-description {
+    max-width: 535px;
+
+    margin-top: 26px;
+
+    color: var(--text-secondary);
+
+    font-size: 17px;
+    line-height: 1.75;
+
+    letter-spacing: -0.2px;
+}
+
+.hero-buttons {
+    margin-top: 34px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-features {
+    margin-top: 42px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+
+    color: #676c74;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.feature-icon {
+    width: 18px;
+    height: 18px;
+
+    display: grid;
+    place-items: center;
+
+    color: var(--success);
+    background: rgba(34, 160, 107, 0.08);
+
+    border-radius: 50%;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/* PARKING VISUAL */
+
+.hero-visual {
+    position: relative;
+}
+
+.hero-visual::before {
+    content: "";
+
+    width: 520px;
+    height: 520px;
+
+    position: absolute;
+    inset: 50% auto auto 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: rgba(23, 105, 224, 0.045);
+
+    filter: blur(1px);
+
+    z-index: -1;
+}
+
+.parking-card {
+    width: 100%;
+    max-width: 500px;
+
+    margin-left: auto;
+
+    padding: 28px;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+
+    box-shadow:
+        0 30px 80px rgba(20, 27, 38, 0.08),
+        0 5px 20px rgba(20, 27, 38, 0.04);
+}
+
+.parking-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.parking-label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #979ba2;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+}
+
+.parking-card h2 {
+    font-size: 18px;
+    font-weight: 600;
+
+    letter-spacing: -0.4px;
+}
+
+.live {
+    padding: 7px 9px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #388668;
+    background: #f0faf6;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.live span {
+    width: 6px;
+    height: 6px;
+
+    background: var(--success);
+
+    border-radius: 50%;
+}
+
+.parking-overview {
+    margin-top: 34px;
+}
+
+.parking-progress {
+    margin-bottom: 28px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--border);
+
+    padding-bottom: 24px;
+}
+
+.parking-progress-value {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.parking-progress strong {
+    font-size: 38px;
+    line-height: 1;
+
+    letter-spacing: -2px;
+}
+
+.parking-progress-value span {
+    color: #a0a4aa;
+
+    font-size: 14px;
+}
+
+.parking-progress > span {
+    color: #7e838b;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.parking-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+.parking-slot {
+    height: 50px;
+
+    position: relative;
+
+    background: #edf7f2;
+
+    border: 1px solid #d7eee3;
+    border-radius: 8px;
+}
+
+.parking-slot::before {
+    content: "";
+
+    width: 22px;
+    height: 4px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: #9cd0ba;
+
+    border-radius: 100px;
+}
+
+.parking-slot.occupied {
+    background: #f3f4f5;
+
+    border-color: #e5e7ea;
+}
+
+.parking-slot.occupied::before {
+    width: 30px;
+    height: 14px;
+
+    background: #a8acb2;
+
+    border-radius: 4px;
+}
+
+.parking-card-footer {
+    margin-top: 24px;
+    padding-top: 18px;
+
+    display: flex;
+    gap: 18px;
+
+    border-top: 1px solid var(--border);
+
+    color: #747981;
+
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.parking-card-footer > div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend {
+    width: 7px;
+    height: 7px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+}
+
+.legend.available {
+    background: #77c5a2;
+}
+
+.legend.unavailable {
+    background: #a8acb2;
+}
+
+
+/* MOBILE MENU */
+
+.mobile-menu {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 9px;
+
+    background: transparent;
+
+    border: 0;
+}
+
+.mobile-menu span {
+    width: 100%;
+    height: 2px;
+
+    display: block;
+
+    margin: 5px 0;
+
+    background: var(--text);
+
+    border-radius: 100px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 920px) {
+
+    .nav-links,
+    .nav-actions {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .hero {
+        padding-top: 60px;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+
+        gap: 60px;
+    }
+
+    .hero-content {
+        max-width: 680px;
+    }
+
+    .hero h1 {
+        letter-spacing: -3px;
+    }
+
+    .parking-card {
+        margin: 0;
+    }
+
+}
+
+@media (max-width: 560px) {
+
+    .container {
+        width: min(calc(100% - 32px), var(--container));
+    }
+
+    .hero {
+        padding: 48px 0 70px;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+        letter-spacing: -2.5px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+    }
+
+    .hero-buttons {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .button,
+    .button-secondary {
+        width: 100%;
+    }
+
+    .hero-features {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .parking-card {
+        padding: 20px;
+    }
+
+}
+
+/* PAGE INTRO */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.hero-badge {
+    animation: fadeUp 0.55s ease-out both;
+}
+
+.hero h1 {
+    animation: fadeUp 0.65s 0.08s ease-out both;
+}
+
+.hero-description {
+    animation: fadeUp 0.65s 0.16s ease-out both;
+}
+
+.hero-buttons {
+    animation: fadeUp 0.65s 0.24s ease-out both;
+}
+
+.hero-features {
+    animation: fadeUp 0.65s 0.32s ease-out both;
+}
+
+.parking-card {
+    animation: fadeInRight 0.75s 0.15s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-badge,
+    .hero h1,
+    .hero-description,
+    .hero-buttons,
+    .hero-features,
+    .parking-card {
+        animation: none;
+    }
 }

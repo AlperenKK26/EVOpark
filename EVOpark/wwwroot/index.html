@@ -1,14 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="EVOpark ile otopark, oto yıkama ve EV şarj hizmetlerini tek yerden yönetin.">
+    <meta name="theme-color" content="#f5f7f5">
+    <title>EVOpark | Park et. Yıka. Şarj et.</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/home.css">
 </head>
 <body>
-    <h1>EVOpark</h1>
+    <a class="skip-link" href="#main-content">İçeriğe geç</a>
 
-    <script src="app.js"></script>
+    <header class="site-header" data-header>
+        <div class="container navbar">
+            <a class="brand" href="/" aria-label="EVOpark ana sayfa">
+                <img class="brand-logo" src="/assets/images/logo.png" alt="EVOpark">
+            </a>
+
+            <nav class="desktop-nav" aria-label="Ana navigasyon">
+                <a class="nav-link is-active" href="#top">Anasayfa</a>
+                <a class="nav-link" href="#parking">Otoparklar</a>
+                <a class="nav-link" href="#services">Hizmetler</a>
+                <a class="nav-link" href="#membership">Üyelik</a>
+                <a class="nav-link" href="#contact">İletişim</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a class="text-link" href="/login.html">Giriş Yap</a>
+                <a class="button button-dark button-compact" href="#parking" data-magnetic>Otopark bul <span aria-hidden="true">↗</span></a>
+            </div>
+
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobileNav" data-menu-toggle>
+                <span class="sr-only">Menüyü aç</span>
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+        <nav class="mobile-nav" id="mobileNav" aria-label="Mobil navigasyon" data-mobile-nav hidden>
+            <a href="#top">Anasayfa</a>
+            <a href="#parking">Otoparklar</a>
+            <a href="#services">Hizmetler</a>
+            <a href="#membership">Üyelik</a>
+            <a href="#contact">İletişim</a>
+            <a class="mobile-nav-login" href="/login.html">Giriş Yap <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="hero" id="top">
+            <div class="container hero-layout">
+                <div class="hero-copy">
+                    <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> Şehrin hareketi için akıllı altyapı</p>
+                    <h1>Park et.<br><em>Yıka. Şarj et.</em><br>Tek yerden yönet.</h1>
+                    <p class="hero-lede">Şehrin içinde aradığınız yeri dakikalar içinde bulun. Otopark, oto yıkama ve elektrikli araç şarjını sade bir deneyimde birleştirdik.</p>
+                    <div class="hero-actions">
+                        <a class="button button-dark" href="#parking" data-magnetic>Yakınımdaki otoparklar <span aria-hidden="true">↗</span></a>
+                        <a class="button button-quiet" href="#services">Nasıl çalışır? <span aria-hidden="true">↓</span></a>
+                    </div>
+                    <div class="hero-proof" aria-label="EVOpark avantajları">
+                        <span><strong>7/24</strong> erişim</span>
+                        <span><strong>Canlı</strong> doluluk</span>
+                        <span><strong>Tek</strong> hesap</span>
+                    </div>
+                </div>
+
+                <div class="hero-panel" aria-label="Yakınındaki otopark önizlemesi" data-tilt-card>
+                    <span class="hero-float hero-float-status" aria-hidden="true"><i></i> Sistem aktif</span>
+                    <span class="hero-float hero-float-charge" aria-hidden="true"><b>ϟ</b> 4 şarj noktası</span>
+                    <div class="panel-topline"><span>Şu an yakınında</span><span class="live-pill"><i aria-hidden="true"></i> Canlı</span></div>
+                    <div class="map-preview" aria-hidden="true">
+                        <span class="map-road road-a"></span><span class="map-road road-b"></span><span class="map-road road-c"></span>
+                        <span class="map-water"></span><span class="map-pin pin-one">E</span><span class="map-pin pin-two">E</span>
+                        <span class="map-label label-one">Adalar</span><span class="map-label label-two">Odunpazarı</span>
+                        <span class="map-user"><i></i></span><span class="route-flow route-flow-one"><i></i></span><span class="route-flow route-flow-two"><i></i></span>
+                    </div>
+                    <div class="parking-grid-3d" aria-label="Canlı park alanları"><div class="grid-status"><span>Park alanları</span><span data-live-time>şimdi</span></div><div class="parking-slots" data-parking-slots><span class="parking-slot-3d is-occupied"></span><span class="parking-slot-3d"></span><span class="parking-slot-3d"></span><span class="parking-slot-3d is-occupied"></span><span class="parking-slot-3d"></span><span class="parking-slot-3d is-occupied"></span><span class="parking-slot-3d"></span><span class="parking-slot-3d"></span><span class="parking-slot-3d is-occupied"></span><span class="parking-slot-3d"></span><span class="parking-slot-3d"></span><span class="parking-slot-3d is-occupied"></span></div></div>
+                    <div class="panel-location"><div><span class="panel-kicker">EN YAKIN</span><strong>EVOpark Adalar</strong><span class="muted-line">Porsuk Bulvarı · 450 m</span></div><span class="distance">3 dk</span></div>
+                    <div class="panel-stats"><div><span class="stat-label">Müsait yer</span><strong><span data-available-count data-count="68">68</span> <small>/ 100</small></strong></div><div><span class="stat-label">Saatlik</span><strong>₺85</strong></div><a class="icon-button" href="#parking" aria-label="Otopark detaylarını gör" data-magnetic>↗</a></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services section" id="services" aria-labelledby="services-title">
+            <div class="container">
+                <div class="section-heading reveal"><div><p class="eyebrow">Tek platform, üç çözüm</p><h2 id="services-title">İhtiyacınız olan her şey<br><em>yolunuzun üzerinde.</em></h2></div><p>Gününüzü bölmeden park edin, aracınızı yenileyin ve yolunuza devam edin.</p></div>
+                <div class="service-grid">
+                    <article class="service-card service-card-primary reveal" data-service-card><div class="service-icon" aria-hidden="true">⌖</div><p class="card-kicker">01 · PARK</p><h3>Otopark</h3><p>Yakınınızdaki uygun yerleri görün, fiyatı önceden bilin ve yerinizi güvenle ayırın.</p><a class="card-link" href="#parking">Otoparkları keşfet <span aria-hidden="true">↗</span></a></article>
+                    <article class="service-card reveal" data-service-card><div class="service-icon service-icon-wash" aria-hidden="true">✦</div><p class="card-kicker">02 · BAKIM</p><h3>Oto yıkama</h3><p>Aracınız park halindeyken profesyonel bakım ekibimiz işini tamamlasın.</p><a class="card-link" href="#contact">Hizmeti incele <span aria-hidden="true">↗</span></a></article>
+                    <article class="service-card reveal" data-service-card><div class="service-icon service-icon-charge" aria-hidden="true">ϟ</div><p class="card-kicker">03 · ENERJİ</p><h3>EV şarj</h3><p>Şarj istasyonlarını bulun, uygun noktayı ayırın ve enerji kullanımınızı takip edin.</p><a class="card-link" href="#contact">İstasyonları gör <span aria-hidden="true">↗</span></a></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="journey section" id="journey" aria-labelledby="journey-title">
+            <div class="container">
+                <div class="section-heading reveal"><div><p class="eyebrow">Şehirde bir akış</p><h2 id="journey-title">Bir duraktan<br><em>üç kolay adım.</em></h2></div><p>Aracınız sizin gününüze ayak uydursun. EVOpark deneyimi, yola çıkmadan önce başlar.</p></div>
+                <div class="journey-track reveal" data-journey-track>
+                    <div class="journey-line"><span class="journey-progress"></span><span class="journey-vehicle" aria-hidden="true">▰</span></div>
+                    <article class="journey-step"><span class="step-index">01</span><span class="journey-icon" aria-hidden="true">⌖</span><h3>Park et</h3><p>Adalar’dan Sazova’ya, uygun yeri canlı görün.</p></article>
+                    <article class="journey-step"><span class="step-index">02</span><span class="journey-icon journey-icon-wash" aria-hidden="true">✦</span><h3>Yıka</h3><p>Aracınız siz işinize bakarken yenilensin.</p></article>
+                    <article class="journey-step"><span class="step-index">03</span><span class="journey-icon journey-icon-charge" aria-hidden="true">ϟ</span><h3>Şarj et</h3><p>Yola hazır, dolu bir enerjiyle devam edin.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="parking-section section" id="parking" aria-labelledby="parking-title">
+            <div class="container parking-layout">
+                <div class="parking-copy"><p class="eyebrow">Yakınındaki seçenekler</p><h2 id="parking-title">Aramayı bırak,<br><em>yerini bil.</em></h2><p>Canlı doluluk ve şeffaf fiyat bilgisiyle gideceğiniz yere daha sakin ulaşın. Harita ve rezervasyon özellikleri backend entegrasyonu hazır olduğunda bu alana bağlanacak.</p><a class="button button-outline" href="/login.html" data-magnetic>Rezervasyon için giriş yap <span aria-hidden="true">↗</span></a></div>
+                <div class="parking-list" aria-label="Örnek otopark seçenekleri">
+                    <article class="parking-item reveal"><div class="parking-item-index">01</div><div class="parking-item-main"><div class="parking-item-title"><h3>EVOpark Adalar</h3><span class="availability">● 68 yer</span></div><p>Porsuk Bulvarı · Kapalı</p><div class="item-meta"><span>₺85 / saat</span><span>24 saat</span><span>450 m</span></div></div><a class="item-arrow" href="#" aria-label="EVOpark Adalar detayları">↗</a></article>
+                    <article class="parking-item reveal"><div class="parking-item-index">02</div><div class="parking-item-main"><div class="parking-item-title"><h3>Espark Otopark</h3><span class="availability availability-limited">● 12 yer</span></div><p>Üniversite Caddesi · Açık</p><div class="item-meta"><span>₺65 / saat</span><span>06:00–00:00</span><span>800 m</span></div></div><a class="item-arrow" href="#" aria-label="Espark Otopark detayları">↗</a></article>
+                    <article class="parking-item reveal"><div class="parking-item-index">03</div><div class="parking-item-main"><div class="parking-item-title"><h3>Sazova EV Hub</h3><span class="availability">● 24 yer</span></div><p>Sazova Mahallesi · EV şarj</p><div class="item-meta"><span>₺90 / saat</span><span>24 saat</span><span>1.2 km</span></div></div><a class="item-arrow" href="#" aria-label="Sazova EV Hub detayları">↗</a></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="membership section" id="membership" aria-labelledby="membership-title">
+            <div class="container membership-inner reveal"><div><p class="eyebrow">Daha çok hareket, daha az bekleme</p><h2 id="membership-title">Şehrin ritmine<br><em>uyum sağlayın.</em></h2></div><div class="membership-copy"><p>EVOpark üyeliğiyle her gün kullandığınız hizmetlere tek hesapla erişin. Aylık planlar ve işletme avantajları yakında.</p><a class="button button-light" href="/login.html" data-magnetic>Üyelik seçeneklerini gör <span aria-hidden="true">↗</span></a></div></div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="contact"><div class="container footer-inner"><a class="brand brand-footer" href="/" aria-label="EVOpark ana sayfa"><img class="brand-logo" src="/assets/images/logo.png" alt="EVOpark"></a><p>Park et. Yıka. Şarj et.</p><div class="footer-links"><a href="mailto:wosterdev@gmail.com">wosterdev@gmail.com</a><span>© 2026 EVOpark</span></div></div></footer>
+    <div class="page-transition" data-page-transition aria-hidden="true"><span></span><i></i></div>
+
+    <script src="/js/utils.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/home.js" defer></script>
 </body>
 </html>
