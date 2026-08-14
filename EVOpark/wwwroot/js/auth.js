@@ -1,43 +1,113 @@
-(() => {
-    "use strict";
+"use strict";
 
-    const form = EVO.qs("#loginForm");
-    if (!form) return;
+const loginForm = document.getElementById("loginForm");
+const loginSubmit = document.getElementById("loginSubmit");
+const loginStatus = document.getElementById("loginStatus");
 
-    const email = EVO.qs("#email", form);
-    const password = EVO.qs("#password", form);
-    const status = EVO.qs("#loginStatus", form);
-    const submit = EVO.qs("#loginSubmit", form);
+loginForm.addEventListener("submit", async function (event) {
+    // Formun normal şekilde sayfayı yenilemesini engeller.
+    event.preventDefault();
 
-    const setError = (field, message) => EVO.setText(EVO.qs(`[data-error-for="${field.name}"]`, form), message);
-    const clearErrors = () => { setError(email, ""); setError(password, ""); EVO.setStatus(status, ""); };
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        clearErrors();
-        let valid = true;
-        if (!email.value.trim() || !email.validity.valid) { setError(email, "Geçerli bir e-posta adresi girin."); valid = false; }
-        if (!password.value) { setError(password, "Şifrenizi girin."); valid = false; }
-        if (!valid) return;
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
 
-        submit.disabled = true;
-        submit.setAttribute("aria-busy", "true");
+    hideStatus();
+
+    if (!email) {
+        showError("E-posta adresinizi girin.");
+        emailInput.focus();
+        return;
+    }
+
+    if (!password) {
+        showError("Şifrenizi girin.");
+        passwordInput.focus();
+        return;
+    }
+
+    setLoading(true);
+
+    try {
+        const response = await fetch("/api/auth/login", {
+            method: "POST",
+
+            // Backend’in oluşturduğu oturum çerezini kabul eder.
+            credentials: "same-origin",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+
+        let result = null;
+
         try {
-            // Parola yalnızca POST gövdesinde gönderilir; hiçbir storage, URL veya log içine yazılmaz.
-            const result = await EVO.api.post("/api/auth/login", { email: email.value.trim(), password: password.value });
-            password.value = "";
-            if (result?.authenticated === false) throw new EVO.api.ApiError("E-posta veya şifre hatalı.", 401, "invalid_credentials");
-            EVO.setStatus(status, "Giriş başarılı. Yönlendiriliyorsunuz...", "success");
-            window.setTimeout(() => { window.location.assign("/"); }, 350);
-        } catch (error) {
-            password.value = "";
-            const message = error?.code === "not_found" ? "Giriş servisi henüz backend'e eklenmedi. Bu form gerçek bir oturum açmıyor." : error?.code === "rate_limited" ? "Çok fazla deneme yapıldı. Lütfen biraz sonra tekrar deneyin." : error?.status === 401 ? "E-posta veya şifre hatalı." : "Giriş şu anda tamamlanamadı. Lütfen daha sonra tekrar deneyin.";
-            EVO.setStatus(status, message);
-        } finally {
-            submit.disabled = false;
-            submit.removeAttribute("aria-busy");
+            result = await response.json();
+        } catch {
+            // Sunucu JSON döndürmezse uygulamanın çökmesini engeller.
         }
-    });
 
-    EVO.enablePageTransitions?.();
-})();
+        if (!response.ok) {
+            const message =
+                result?.message ??
+                `Giriş işlemi başarısız oldu (${response.status}).`;
+
+            throw new Error(message);
+        }
+
+        showSuccess("Giriş başarılı. Yönlendiriliyorsunuz...");
+
+        // C# tarafından döndürülen adrese yönlendirir.
+        window.location.href =
+            result?.redirectUrl ?? "/home.html";
+    } catch (error) {
+        console.error("Giriş hatası:", error);
+
+        showError(
+            error instanceof Error
+                ? error.message
+                : "Beklenmeyen bir hata oluştu."
+        );
+    } finally {
+        setLoading(false);
+    }
+});
+
+function setLoading(isLoading) {
+    loginSubmit.disabled = isLoading;
+
+    if (isLoading) {
+        loginSubmit.textContent = "Kontrol ediliyor...";
+    } else {
+        loginSubmit.innerHTML =
+            'Giriş yap <span aria-hidden="true">↗</span>';
+    }
+}
+
+function showError(message) {
+    loginStatus.textContent = message;
+    loginStatus.hidden = false;
+    loginStatus.classList.remove("is-success");
+    loginStatus.classList.add("is-error");
+}
+
+function showSuccess(message) {
+    loginStatus.textContent = message;
+    loginStatus.hidden = false;
+    loginStatus.classList.remove("is-error");
+    loginStatus.classList.add("is-success");
+}
+
+function hideStatus() {
+    loginStatus.textContent = "";
+    loginStatus.hidden = true;
+    loginStatus.classList.remove("is-error", "is-success");
+}
