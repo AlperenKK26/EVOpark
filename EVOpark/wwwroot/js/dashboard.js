@@ -113,6 +113,19 @@
         if (panel && toggle?.getAttribute("aria-expanded") !== "true") toggle.click();
     }));
 
+    EVO.qsa("[data-plan-slot]").forEach((slot) => slot.addEventListener("click", () => {
+        const parkingPanel = EVO.qs("#booking-parking");
+        const panelSlots = EVO.qsa(".space-slot", parkingPanel);
+        EVO.qsa("[data-plan-slot]").forEach((item) => item.classList.remove("is-selected"));
+        panelSlots.forEach((item) => item.classList.remove("is-selected"));
+        slot.classList.add("is-selected");
+        const slotCode = slot.dataset.space || slot.textContent.trim();
+        EVO.setText(EVO.qs("[data-selected-label]", parkingPanel), `${slotCode} seçildi`);
+        EVO.setText(EVO.qs("[data-choice-label]", parkingPanel), slotCode);
+        const reservationButton = EVO.qs("[data-reservation]", parkingPanel);
+        if (reservationButton) reservationButton.disabled = false;
+    }));
+
     const magneticItems = EVO.qsa("[data-magnetic]");
     const canTilt = window.matchMedia?.("(pointer: fine)").matches && !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     if (canTilt) magneticItems.forEach((item) => {
