@@ -1,11 +1,37 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>EVOpark Ana Sayfa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="EVOpark hesabınızla otopark, yıkama ve şarj hizmetlerinizi yönetin.">
+    <meta name="theme-color" content="#f5f7f5">
+    <title>Hesabım | EVOpark</title>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
-<body>
-    <h1>Giriş başarılı</h1>
-    <p>EVOpark ana sayfasına hoş geldiniz.</p>
+<body class="dashboard-page">
+    <a class="skip-link" href="#main-content">İçeriğe geç</a>
+    <header class="dashboard-header">
+        <div class="container dashboard-nav">
+            <a class="brand" href="/" aria-label="EVOpark ana sayfa"><img class="brand-logo" src="/assets/images/logo.png" alt="EVOpark"></a>
+            <nav class="dashboard-links" aria-label="Hesap navigasyonu"><a class="dashboard-link is-active" href="/home.html">Genel bakış</a><a class="dashboard-link" href="#parking">Otoparklar</a><a class="dashboard-link" href="#services">Hizmetler</a></nav>
+            <div class="dashboard-user"><span class="avatar" data-user-initials aria-hidden="true">E</span><span class="user-name" data-user-name>Hesabım</span><button class="logout-button" type="button" data-logout>Çıkış</button></div>
+            <button class="dashboard-menu" type="button" aria-expanded="false" aria-controls="dashboardMobileNav" data-dashboard-menu><span class="sr-only">Menüyü aç</span><span></span><span></span><span></span></button>
+        </div>
+        <nav class="dashboard-mobile-nav" id="dashboardMobileNav" aria-label="Mobil hesap navigasyonu" data-dashboard-mobile-nav hidden><a href="/home.html">Genel bakış</a><a href="#parking">Otoparklar</a><a href="#services">Hizmetler</a><button type="button" data-logout>Çıkış yap</button></nav>
+    </header>
+
+    <main id="main-content">
+        <section class="dashboard-hero"><div class="container dashboard-hero-grid"><div class="welcome-copy"><p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> EVOpark hesabınız</p><h1>Merhaba <span data-user-first-name>orada</span>,<br><em>bugün nereye?</em></h1><p>Şehrin içinde zaman kaybetmeden park edin, aracınızla ilgilenin ve yolunuza devam edin.</p><div class="welcome-actions"><a class="button button-dark" href="#parking" data-magnetic>Yakınımdaki otoparklar <span aria-hidden="true">↗</span></a><a class="button button-quiet" href="#services">Hizmet seçin <span aria-hidden="true">↓</span></a></div></div><div class="today-card" aria-label="Bugünün EVOpark özeti"><div class="today-card-glow"></div><div class="today-top"><span class="today-label">BUGÜNÜN ÖZETİ</span><span class="today-date" data-today>19 AĞUSTOS</span></div><div class="today-orbit"><span class="orbit-line orbit-line-one"></span><span class="orbit-line orbit-line-two"></span><span class="orbit-core">E</span><span class="orbit-dot orbit-dot-one"></span><span class="orbit-dot orbit-dot-two"></span></div><div class="today-bottom"><div><span>Yakınında</span><strong>12 <small>otopark</small></strong></div><div><span>Boş yer</span><strong>68 <small>müsait</small></strong></div></div></div></div></section>
+
+        <section class="dashboard-section" id="services" aria-labelledby="quick-title"><div class="container"><div class="dashboard-heading"><div><p class="eyebrow">Hızlı erişim</p><h2 id="quick-title">Gününüzü kolaylaştırın.</h2></div><p>En çok kullandığınız EVOpark hizmetleri tek dokunuş uzağınızda.</p></div><div class="quick-grid"><a class="quick-card quick-card-parking" href="#parking" data-magnetic><span class="quick-card-number">01</span><span class="quick-icon" aria-hidden="true">⌖</span><strong>Otopark bul</strong><span>Canlı müsaitliği gör <b aria-hidden="true">↗</b></span></a><a class="quick-card quick-card-wash" href="#coming-soon" data-coming-soon data-magnetic><span class="quick-card-number">02</span><span class="quick-icon" aria-hidden="true">✦</span><strong>Oto yıkama</strong><span>Aracınız için bakım <b aria-hidden="true">↗</b></span></a><a class="quick-card quick-card-charge" href="#coming-soon" data-coming-soon data-magnetic><span class="quick-card-number">03</span><span class="quick-icon" aria-hidden="true">ϟ</span><strong>EV şarj</strong><span>İstasyonları keşfet <b aria-hidden="true">↗</b></span></a></div></div></section>
+
+        <section class="dashboard-section parking-dashboard" id="parking" aria-labelledby="nearby-title"><div class="container"><div class="dashboard-heading"><div><p class="eyebrow">Eskişehir çevresinde</p><h2 id="nearby-title">Yakınındaki otoparklar.</h2></div><a class="small-action" href="/">Haritada gör <span aria-hidden="true">↗</span></a></div><div class="nearby-layout"><div class="nearby-list"><article class="nearby-card is-featured"><div class="nearby-marker">01</div><div class="nearby-main"><div class="nearby-title-row"><h3>EVOpark Adalar</h3><span class="availability"><i></i> 68 yer</span></div><p>Porsuk Bulvarı · Kapalı otopark</p><div class="nearby-meta"><span>₺85 / saat</span><span>24 saat açık</span><span>450 m</span></div></div><a href="#coming-soon" class="nearby-arrow" data-coming-soon aria-label="EVOpark Adalar detayları">↗</a></article><article class="nearby-card"><div class="nearby-marker">02</div><div class="nearby-main"><div class="nearby-title-row"><h3>Espark Otopark</h3><span class="availability availability-limited"><i></i> 12 yer</span></div><p>Üniversite Caddesi · Açık otopark</p><div class="nearby-meta"><span>₺65 / saat</span><span>06:00–00:00</span><span>800 m</span></div></div><a href="#coming-soon" class="nearby-arrow" data-coming-soon aria-label="Espark Otopark detayları">↗</a></article><article class="nearby-card"><div class="nearby-marker">03</div><div class="nearby-main"><div class="nearby-title-row"><h3>Sazova EV Hub</h3><span class="availability"><i></i> 24 yer</span></div><p>Sazova Mahallesi · EV şarj</p><div class="nearby-meta"><span>₺90 / saat</span><span>24 saat açık</span><span>1.2 km</span></div></div><a href="#coming-soon" class="nearby-arrow" data-coming-soon aria-label="Sazova EV Hub detayları">↗</a></article></div><div class="mini-map" aria-label="Eskişehir otopark haritası önizlemesi"><span class="mini-map-road mini-road-one"></span><span class="mini-map-road mini-road-two"></span><span class="mini-map-road mini-road-three"></span><span class="mini-map-river"></span><span class="mini-map-pin mini-pin-one">E</span><span class="mini-map-pin mini-pin-two">E</span><span class="mini-map-pin mini-pin-three">E</span><span class="mini-map-label">Porsuk</span><span class="mini-map-label mini-label-two">Adalar</span><div class="map-caption"><span class="live-pill"><i></i> Canlı görünüm</span><strong>Eskişehir</strong><span>Yakınınızdaki EVOpark noktaları</span></div></div></div></div></section>
+
+        <section class="dashboard-section member-banner" aria-labelledby="member-title"><div class="container member-banner-inner"><div><p class="eyebrow">EVOpark üyeliği</p><h2 id="member-title">Şehrin ritmine<br><em>ayak uydurun.</em></h2></div><div class="member-banner-copy"><p>Daha hızlı rezervasyon, özel fırsatlar ve tüm hizmetleriniz için tek bir hesap.</p><a class="button button-light" href="#coming-soon" data-coming-soon data-magnetic>Üyelik avantajlarını gör <span aria-hidden="true">↗</span></a></div></div></section>
+    </main>
+    <footer class="dashboard-footer"><div class="container dashboard-footer-inner"><img class="dashboard-footer-logo" src="/assets/images/logo.png" alt="EVOpark"><span>Park et. Yıka. Şarj et.</span><a href="/">Tanıtım sayfasına dön ↗</a></div></footer>
+    <div class="page-transition" data-page-transition aria-hidden="true"><span></span><i></i></div>
+    <script src="/js/utils.js" defer></script><script src="/js/api.js" defer></script><script src="/js/dashboard.js" defer></script>
 </body>
 </html>

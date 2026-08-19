@@ -17,7 +17,7 @@
 .hero-layout { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(390px, .8fr); align-items: center; gap: 96px; }
 .hero-copy { max-width: 620px; }
 .eyebrow-dot { display: inline-block; width: 7px; height: 7px; margin-right: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-.hero h1 { max-width: 650px; margin: 25px 0 0; font-size: clamp(47px, 6.3vw, 78px); line-height: .98; letter-spacing: -.075em; font-weight: 780; }
+.hero h1 { max-width: 650px; margin: 25px 0 0; font-size: clamp(47px, 6.3vw, 78px); line-height: .98; letter-spacing: -.075em; font-weight: 600; }
 h1 em, h2 em { color: var(--accent); font-style: normal; }
 .hero-lede { max-width: 500px; margin: 27px 0 0; color: var(--ink-soft); font-size: 16px; line-height: 1.75; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 34px; }
