@@ -148,8 +148,8 @@
 
         const services = {
             parking: {
-                title: "EVOpark Adalar · Otopark",
-                subtitle: "A, B ve C blokları",
+                title: "Otoparkı yukarıdan gör.",
+                subtitle: "A, B ve C blokları · EVOpark Adalar",
                 summary: "Otopark randevusu",
                 instruction: "Haritadaki yeşil park alanlarından birini seçin.",
                 price: "₺85 / saat",
@@ -161,8 +161,8 @@
                 ]
             },
             wash: {
-                title: "EVOpark Adalar · Oto yıkama",
-                subtitle: "Üstten kabin yerleşimi",
+                title: "Yıkama kabinlerini yukarıdan gör.",
+                subtitle: "Üstten kabin yerleşimi · EVOpark Adalar",
                 summary: "Yıkama randevusu",
                 instruction: "Yeşil durumdaki uygun yıkama kabinini seçin.",
                 price: "₺320 / yıkama",
@@ -170,8 +170,8 @@
                 slots: [["W01", "free"], ["W02", "busy"], ["W03", "free"], ["W04", "free"], ["W05", "busy"], ["W06", "busy"]]
             },
             charge: {
-                title: "EVOpark Adalar · EV şarj",
-                subtitle: "Üstten şarj istasyonu yerleşimi",
+                title: "Şarj istasyonlarını yukarıdan gör.",
+                subtitle: "Üstten şarj yerleşimi · EVOpark Adalar",
                 summary: "EV şarj randevusu",
                 instruction: "Mavi-yeşil durumdaki uygun şarj noktasını seçin.",
                 price: "₺9,80 / kWh",

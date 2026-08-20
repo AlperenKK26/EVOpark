@@ -273,3 +273,47 @@
 @media (max-width: 760px) { .facility-booking { padding: 17px; }.facility-map { min-height: 560px; }.facility-map-parking { grid-template-columns: 1fr; padding: 52px 12px 68px; }.facility-map-parking::before { bottom: 43px; }.facility-block { padding: 7px; }.facility-slot { min-height: 56px; }.facility-map-service { padding: 58px 14px 75px; }.facility-map-wash .facility-service-grid { grid-template-columns: repeat(2, 1fr); }.facility-map-service .facility-slot { min-height: 112px; } }
 @media (max-width: 520px) { .facility-tabs { grid-template-columns: 1fr; }.facility-tab { grid-template-columns: 25px 1fr auto; }.facility-tab > span { grid-row: 1; }.facility-tab small { text-align: right; }.facility-map-card { padding: 10px; }.facility-map { min-height: 520px; border-width: 4px; }.facility-map-head { align-items: flex-start; flex-direction: column; }.facility-floor { display: none; }.facility-slot-grid { gap: 3px; }.facility-slot { min-height: 49px; font-size: 7px; }.top-car { top: 6px; width: 15px; height: 32px; }.facility-map-charge .facility-service-grid { grid-template-columns: 1fr; }.facility-map-charge { min-height: 620px; }.facility-reservation { padding: 21px 18px; } }
 @media (prefers-reduced-motion: reduce) { .facility-live i, .facility-slot.is-selected { animation: none; }.facility-map, .facility-tab, .facility-slot { transition: none; } }
+
+/* Reference layout: a wide top-down plan first, reservation controls underneath. */
+.facility-booking-grid { grid-template-columns: minmax(0, 1fr); }
+.facility-map-card { padding: 19px 19px 15px; background: #fbfcfb; }
+.facility-map-head { min-height: 66px; padding: 2px 5px 15px; align-items: center; }
+.facility-map-head > div { gap: 5px; }
+.facility-map-kicker { color: var(--accent); font-size: 8px; font-weight: 900; letter-spacing: .15em; }
+.facility-map-head strong { font-size: 20px; letter-spacing: -.05em; }
+.facility-map-head small { font-size: 9px; }
+.facility-map-head > .facility-live { padding: 8px 10px; color: var(--accent); background: var(--accent-soft); border-radius: 5px; font-size: 8px; letter-spacing: 0; }
+.facility-map { min-height: 325px; }
+.facility-map-parking { min-height: 255px; padding: 22px 68px; align-items: center; }
+.facility-map-parking::before { top: 50%; right: 16px; bottom: auto; left: 16px; height: 34px; transform: translateY(-50%); }
+.facility-block { min-height: 164px; padding: 8px; display: flex; flex-direction: column; justify-content: center; }
+.facility-block h5 { margin-bottom: 8px; padding: 7px 4px; }
+.facility-slot { min-height: 47px; }
+.top-car { top: 5px; width: 15px; height: 31px; }
+.facility-gate { top: 50%; bottom: auto; padding: 5px 7px; background: rgba(255,255,255,.82); border-radius: 4px; transform: translateY(-50%); }
+.facility-gate-entry { left: 6px; }
+.facility-gate-exit { right: 6px; }
+.facility-gate b { color: var(--accent); font-size: 17px; }
+.facility-road-arrow { top: 50%; bottom: auto; transform: translate(-50%,-50%); }
+.facility-map-legend { padding: 14px 0 1px; }
+.facility-reservation { padding: 18px 20px; display: grid; grid-template-columns: minmax(190px, 1.45fr) minmax(130px, .85fr) minmax(130px, .85fr) minmax(105px, .65fr) minmax(130px, auto); grid-template-areas: "step step step step step" "title date time price button" "copy date time price button" "choice date time price button" "note note note note note"; align-items: center; gap: 5px 13px; color: var(--ink); background: #fbfcfb; border: 1px solid #dce6df; border-radius: 10px; box-shadow: none; }
+.facility-step { grid-area: step; color: var(--accent); }
+.facility-reservation h4 { grid-area: title; margin: 5px 0 2px; color: var(--ink); font-size: 19px; }
+.facility-reservation > p { grid-area: copy; margin: 0; color: var(--muted); }
+.facility-choice { grid-area: choice; padding: 0; margin: 4px 0 0; background: transparent; border: 0; }
+.facility-choice span { margin: 0 5px 0 0; display: inline; color: var(--muted); }
+.facility-choice strong { display: inline; color: var(--accent); font-size: 11px; }
+.facility-field { margin: 0; color: var(--ink-soft); }
+.facility-field:nth-of-type(1) { grid-area: date; }
+.facility-field:nth-of-type(2) { grid-area: time; }
+.facility-field input, .facility-field select { color: var(--ink); background: #f1f5f2; border-color: #d8e2db; }
+.facility-price { grid-area: price; margin: 0; padding: 0; display: grid; gap: 6px; border: 0; }
+.facility-price span { color: var(--muted); }
+.facility-price strong { color: var(--accent); }
+.facility-reserve-button { grid-area: button; align-self: stretch; min-height: 58px; color: #fff; background: var(--ink); border-color: var(--ink); }
+.facility-reserve-button:hover:not(:disabled) { color: #fff; background: var(--accent); border-color: var(--accent); }
+.facility-demo-note { grid-area: note; margin-top: 8px; color: var(--muted); text-align: left; }
+.facility-map-service { min-height: 390px; padding: 52px 38px 70px; }
+@media (max-width: 920px) { .facility-reservation { grid-template-columns: 1fr 1fr; grid-template-areas: "step step" "title title" "copy copy" "choice choice" "date time" "price button" "note note"; gap: 10px 12px; }.facility-reserve-button { min-height: 48px; }.facility-map-parking { padding-inline: 13px; }.facility-block { min-height: 154px; } }
+@media (max-width: 760px) { .facility-map { min-height: 555px; }.facility-map-parking { align-items: stretch; padding: 49px 12px 65px; }.facility-block { min-height: 0; }.facility-gate { top: auto; bottom: 10px; transform: none; }.facility-road-arrow { top: auto; bottom: 42px; transform: translateX(-50%); } }
+@media (max-width: 520px) { .facility-reservation { grid-template-columns: 1fr; grid-template-areas: "step" "title" "copy" "choice" "date" "time" "price" "button" "note"; }.facility-map-head { align-items: flex-start; }.facility-map-head > .facility-live { flex: 0 0 auto; }.facility-map-head strong { font-size: 17px; } }
