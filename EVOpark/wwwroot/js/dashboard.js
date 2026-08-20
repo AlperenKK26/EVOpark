@@ -13,6 +13,7 @@
         document.body.append(toast);
         window.setTimeout(() => toast.remove(), 4000);
     };
+    const isPreviewMode = new URLSearchParams(window.location.search).get("preview") === "1";
 
     if (today) today.textContent = new Intl.DateTimeFormat("tr-TR", { day: "numeric", month: "long" }).format(new Date()).toLocaleUpperCase("tr-TR");
 
@@ -24,6 +25,10 @@
     };
 
     const loadUser = async () => {
+        if (isPreviewMode) {
+            setUser({ firstName: "Demo kullanıcı" });
+            return;
+        }
         try {
             const user = await EVO.api.get("/api/auth/me");
             setUser(user);
@@ -125,6 +130,153 @@
         const reservationButton = EVO.qs("[data-reservation]", parkingPanel);
         if (reservationButton) reservationButton.disabled = false;
     }));
+
+    const facilityBooking = EVO.qs("[data-facility-booking]");
+    if (facilityBooking) {
+        const facilityMap = EVO.qs("[data-facility-map]", facilityBooking);
+        const facilityTitle = EVO.qs("[data-facility-title]", facilityBooking);
+        const facilitySubtitle = EVO.qs("[data-facility-subtitle]", facilityBooking);
+        const summaryTitle = EVO.qs("[data-facility-summary-title]", facilityBooking);
+        const summaryCopy = EVO.qs("[data-facility-summary-copy]", facilityBooking);
+        const choiceLabel = EVO.qs("[data-facility-choice]", facilityBooking);
+        const priceLabel = EVO.qs("[data-facility-price]", facilityBooking);
+        const dateInput = EVO.qs("[data-facility-date]", facilityBooking);
+        const timeInput = EVO.qs("[data-facility-time]", facilityBooking);
+        const reserveButton = EVO.qs("[data-facility-reserve]", facilityBooking);
+        const tabs = EVO.qsa("[data-facility-tab]", facilityBooking);
+        const selectedByService = { parking: "", wash: "", charge: "" };
+
+        const services = {
+            parking: {
+                title: "EVOpark Adalar · Otopark",
+                subtitle: "A, B ve C blokları",
+                summary: "Otopark randevusu",
+                instruction: "Haritadaki yeşil park alanlarından birini seçin.",
+                price: "₺85 / saat",
+                aria: "Üstten otopark planı",
+                blocks: [
+                    { name: "A BLOK", slots: [["A01", "free"], ["A02", "busy"], ["A03", "free"], ["A04", "reserved"], ["A05", "free"], ["A06", "busy"], ["A07", "free"], ["A08", "free"], ["A09", "busy"], ["A10", "free"], ["A11", "reserved"], ["A12", "free"]] },
+                    { name: "B BLOK", slots: [["B01", "free"], ["B02", "busy"], ["B03", "free"], ["B04", "free"], ["B05", "reserved"], ["B06", "free"], ["B07", "busy"], ["B08", "free"], ["B09", "free"], ["B10", "busy"], ["B11", "free"], ["B12", "reserved"]] },
+                    { name: "C BLOK", slots: [["C01", "free"], ["C02", "free"], ["C03", "busy"], ["C04", "reserved"], ["C05", "free"], ["C06", "free"], ["C07", "reserved"], ["C08", "free"], ["C09", "busy"], ["C10", "free"], ["C11", "free"], ["C12", "busy"]] }
+                ]
+            },
+            wash: {
+                title: "EVOpark Adalar · Oto yıkama",
+                subtitle: "Üstten kabin yerleşimi",
+                summary: "Yıkama randevusu",
+                instruction: "Yeşil durumdaki uygun yıkama kabinini seçin.",
+                price: "₺320 / yıkama",
+                aria: "Üstten oto yıkama kabini planı",
+                slots: [["W01", "free"], ["W02", "busy"], ["W03", "free"], ["W04", "free"], ["W05", "busy"], ["W06", "busy"]]
+            },
+            charge: {
+                title: "EVOpark Adalar · EV şarj",
+                subtitle: "Üstten şarj istasyonu yerleşimi",
+                summary: "EV şarj randevusu",
+                instruction: "Mavi-yeşil durumdaki uygun şarj noktasını seçin.",
+                price: "₺9,80 / kWh",
+                aria: "Üstten EV şarj istasyonu planı",
+                slots: [["E01", "free"], ["E02", "busy"], ["E03", "free"], ["E04", "busy"]]
+            }
+        };
+        let activeService = "parking";
+
+        const allSlots = (service) => service.blocks ? service.blocks.flatMap((block) => block.slots) : service.slots;
+        const statusText = (status) => status === "busy" ? "dolu" : status === "reserved" ? "rezerve" : "boş";
+        const carMarkup = (status) => status === "busy" ? '<span class="top-car" aria-hidden="true"></span>' : "";
+        const serviceDecor = (type) => type === "wash"
+            ? '<span class="wash-rail wash-rail-left" aria-hidden="true"></span><span class="wash-rail wash-rail-right" aria-hidden="true"></span><span class="wash-spray" aria-hidden="true"></span>'
+            : type === "charge" ? '<span class="charger-post" aria-hidden="true">ϟ</span><span class="charge-cable" aria-hidden="true"></span>' : "";
+        const slotMarkup = ([code, status], type) => {
+            const selected = selectedByService[type] === code;
+            const classes = `facility-slot is-${status}${selected ? " is-selected" : ""}`;
+            const disabled = status !== "free" ? " disabled" : "";
+            return `<button class="${classes}" type="button" data-facility-space="${code}"${disabled} aria-label="${code} ${statusText(status)}">${serviceDecor(type)}${carMarkup(status)}<span class="slot-code">${code}</span></button>`;
+        };
+
+        const updateReserveState = () => {
+            const hasSelection = Boolean(selectedByService[activeService]);
+            const ready = hasSelection && Boolean(dateInput?.value) && Boolean(timeInput?.value);
+            if (reserveButton) reserveButton.disabled = !ready;
+        };
+
+        const renderMap = () => {
+            const service = services[activeService];
+            if (!facilityMap) return;
+            facilityMap.className = `facility-map facility-map-${activeService}${activeService === "parking" ? "" : " facility-map-service"}`;
+            facilityMap.setAttribute("aria-label", service.aria);
+            if (activeService === "parking") {
+                facilityMap.innerHTML = `${service.blocks.map((block) => `<section class="facility-block" aria-label="${block.name}"><h5>${block.name}</h5><div class="facility-slot-grid">${block.slots.map((slot) => slotMarkup(slot, activeService)).join("")}</div></section>`).join("")}<span class="facility-road-arrow" aria-hidden="true">→</span><span class="facility-gate facility-gate-entry">GİRİŞ <b>→</b></span><span class="facility-gate facility-gate-exit"><b>→</b> ÇIKIŞ</span>`;
+            } else {
+                const mapLabel = activeService === "wash" ? "YIKAMA KABİNLERİ" : "ŞARJ İSTASYONLARI";
+                facilityMap.innerHTML = `<div class="facility-service-title">${mapLabel}</div><div class="facility-service-grid">${service.slots.map((slot) => slotMarkup(slot, activeService)).join("")}</div><span class="facility-service-direction" aria-hidden="true">→</span>`;
+            }
+            EVO.qsa("[data-facility-space]", facilityMap).forEach((slot) => slot.addEventListener("click", () => {
+                selectedByService[activeService] = slot.dataset.facilitySpace || "";
+                EVO.qsa("[data-facility-space]", facilityMap).forEach((item) => item.classList.remove("is-selected"));
+                slot.classList.add("is-selected");
+                EVO.setText(choiceLabel, selectedByService[activeService]);
+                reserveButton?.classList.remove("is-confirmed");
+                if (reserveButton) reserveButton.innerHTML = 'Randevu al <span aria-hidden="true">↗</span>';
+                updateReserveState();
+            }));
+        };
+
+        const setService = (serviceName, animate = true) => {
+            if (!services[serviceName]) return;
+            activeService = serviceName;
+            const service = services[activeService];
+            tabs.forEach((tab) => {
+                const selected = tab.dataset.facilityTab === activeService;
+                tab.classList.toggle("is-active", selected);
+                tab.setAttribute("aria-selected", String(selected));
+            });
+            EVO.setText(facilityTitle, service.title);
+            EVO.setText(facilitySubtitle, service.subtitle);
+            EVO.setText(summaryTitle, service.summary);
+            EVO.setText(summaryCopy, service.instruction);
+            EVO.setText(choiceLabel, selectedByService[activeService] || "Henüz seçilmedi");
+            EVO.setText(priceLabel, service.price);
+            reserveButton?.classList.remove("is-confirmed");
+            if (reserveButton) reserveButton.innerHTML = 'Randevu al <span aria-hidden="true">↗</span>';
+            if (animate && facilityMap) {
+                facilityMap.classList.add("is-changing");
+                window.setTimeout(renderMap, 130);
+            } else {
+                renderMap();
+            }
+            updateReserveState();
+        };
+
+        const localToday = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+        if (dateInput) {
+            dateInput.min = localToday;
+            dateInput.value = localToday;
+            dateInput.addEventListener("change", () => {
+                reserveButton?.classList.remove("is-confirmed");
+                updateReserveState();
+            });
+        }
+        timeInput?.addEventListener("change", () => {
+            reserveButton?.classList.remove("is-confirmed");
+            updateReserveState();
+        });
+        tabs.forEach((tab) => tab.addEventListener("click", () => setService(tab.dataset.facilityTab || "parking")));
+        EVO.qsa("[data-facility-jump]").forEach((link) => link.addEventListener("click", () => setService(link.dataset.facilityJump || "parking")));
+        reserveButton?.addEventListener("click", () => {
+            const selected = selectedByService[activeService];
+            if (!selected || !dateInput?.value || !timeInput?.value) return;
+            reserveButton.classList.add("is-confirmed");
+            reserveButton.innerHTML = 'Randevu hazır <span aria-hidden="true">✓</span>';
+            statusMessage(`${selected} alanı için ${dateInput.value} · ${timeInput.value} demo randevusu hazırlandı.`);
+        });
+        Object.entries(services).forEach(([key, service]) => {
+            const tab = tabs.find((item) => item.dataset.facilityTab === key);
+            const count = allSlots(service).filter(([, status]) => status === "free").length;
+            EVO.setText(EVO.qs("small", tab), `${count} boş`);
+        });
+        setService("parking", false);
+    }
 
     const magneticItems = EVO.qsa("[data-magnetic]");
     const canTilt = window.matchMedia?.("(pointer: fine)").matches && !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
